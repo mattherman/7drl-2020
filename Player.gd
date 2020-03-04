@@ -1,16 +1,23 @@
 extends Area2D
 
+class_name Player
+
 onready var Target = preload("res://Target.tscn")
 onready var Fire = preload("res://Fire.tscn")
 
 signal action_completed
+signal damage_received
+
 var tile_size = Constants.TILE_SIZE
 var inputs = Constants.INPUTS
 
 enum {STATE_IDLE, STATE_ACTIVE, STATE_TARGETING}
 var state = STATE_ACTIVE
 
+var health = 100
+
 func _ready():
+	add_to_group("can_receive_damage")
 	hide()
 	
 func start(pos):
@@ -56,3 +63,7 @@ func action_completed():
 	state = STATE_IDLE
 	print("emit: action_completed")
 	emit_signal("action_completed")
+	
+func damage_received(damage):
+	health = max(health - damage, 0)
+	emit_signal("damage_received", health)
