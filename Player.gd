@@ -1,6 +1,7 @@
 extends Area2D
 
 onready var Target = preload("res://Target.tscn")
+onready var Fire = preload("res://Fire.tscn")
 
 var tile_size = Constants.TILE_SIZE
 var inputs = Constants.INPUTS
@@ -36,6 +37,9 @@ func cast_spell():
 	
 func finish_cast_spell(selected_position):
 	print("receive: target_selected %s" % selected_position)
+	var flame = Fire.instance()
+	flame.position = position + selected_position
+	get_parent().add_child(flame)
 	state = STATE_IDLE
 
 func move(dir):
