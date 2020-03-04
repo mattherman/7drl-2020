@@ -1,6 +1,6 @@
 extends Area2D
 
-onready var Selector = preload("res://Selector.tscn")
+onready var Target = preload("res://Target.tscn")
 
 var tile_size = Constants.TILE_SIZE
 var inputs = Constants.INPUTS
@@ -29,9 +29,9 @@ func _unhandled_input(event):
 			
 func cast_spell():
 	casting = true
-	var selector = Selector.instance()
-	selector.connect("target_selected", self, "finish_cast_spell")
-	add_child(selector)
+	var target = Target.instance()
+	target.connect("target_selected", self, "finish_cast_spell")
+	add_child(target)
 	
 func finish_cast_spell(selected_position):
 	print("receive: target_selected %s" % selected_position)
