@@ -5,7 +5,8 @@ onready var Target = preload("res://Target.tscn")
 var tile_size = Constants.TILE_SIZE
 var inputs = Constants.INPUTS
 
-var casting = false
+enum {STATE_IDLE, STATE_TARGETING}
+var state = STATE_IDLE
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,7 +18,7 @@ func start(pos):
 	show()
 
 func _unhandled_input(event):
-	if casting:
+	if state != STATE_IDLE:
 		return
 
 	if event.is_action_pressed("cast_1"):
@@ -28,14 +29,14 @@ func _unhandled_input(event):
 				move(dir)
 			
 func cast_spell():
-	casting = true
+	state = STATE_TARGETING
 	var target = Target.instance()
 	target.connect("target_selected", self, "finish_cast_spell")
 	add_child(target)
 	
 func finish_cast_spell(selected_position):
 	print("receive: target_selected %s" % selected_position)
-	casting = false
+	state = STATE_IDLE
 
 func move(dir):
 	$CollisionRay.cast_to = inputs[dir] * tile_size
