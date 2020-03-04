@@ -18,6 +18,10 @@ _global_script_class_icons={
 config/name="7drl-2020"
 run/main_scene="res://Main.tscn"
 
+[autoload]
+
+Constants="*res://Constants.gd"
+
 [input]
 
 ui_left={

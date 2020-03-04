@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://art/wizard.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
-[ext_resource path="res://Selector.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
@@ -12,9 +11,6 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-
-[node name="Selector" parent="." instance=ExtResource( 3 )]
-z_index = 1
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
