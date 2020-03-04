@@ -21,3 +21,4 @@ __meta__ = {
 
 [node name="StartPosition" type="Position2D" parent="."]
 position = Vector2( 512, 192 )
+[connection signal="action_completed" from="Player" to="." method="_on_Player_action_completed"]

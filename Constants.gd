@@ -9,5 +9,6 @@ const INPUTS = {
 	"ui_up_right": Vector2.UP + Vector2.RIGHT,
 	"ui_up_left": Vector2.UP + Vector2.LEFT,
 	"ui_down_right": Vector2.DOWN + Vector2.RIGHT,
-	"ui_down_left": Vector2.DOWN + Vector2.LEFT
+	"ui_down_left": Vector2.DOWN + Vector2.LEFT,
+	"ui_center": Vector2.ZERO
 }
