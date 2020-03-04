@@ -5,7 +5,6 @@ signal target_selected
 var tile_size = Constants.TILE_SIZE
 var inputs = Constants.INPUTS
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	position = Vector2(0, 0)
 	$Flash.start()

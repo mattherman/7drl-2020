@@ -10,7 +10,6 @@ var inputs = Constants.INPUTS
 enum {STATE_IDLE, STATE_ACTIVE, STATE_TARGETING}
 var state = STATE_ACTIVE
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	hide()
 	
