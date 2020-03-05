@@ -1,6 +1,11 @@
 extends Node
 
+onready var Enemy = preload("res://Enemy.tscn")
+
 func _ready():
+	var enemy = Enemy.instance()
+	add_child(enemy)
+	enemy.start($EnemyStartPosition.position, $Player)
 	$Player.start($StartPosition.position)
 
 func _on_Player_action_completed():

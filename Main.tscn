@@ -25,5 +25,8 @@ position = Vector2( -288, -80 )
 position = Vector2( 288, 104 )
 
 [node name="HUD" parent="." instance=ExtResource( 4 )]
+
+[node name="EnemyStartPosition" type="Position2D" parent="."]
+position = Vector2( 288, 240 )
 [connection signal="action_completed" from="Player" to="." method="_on_Player_action_completed"]
 [connection signal="damage_received" from="Player" to="." method="_on_Player_damage_received"]
