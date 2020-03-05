@@ -7,6 +7,8 @@
 extents = Vector2( 4, 4 )
 
 [node name="Enemy" type="Area2D"]
+collision_layer = 4
+collision_mask = 11
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
@@ -19,4 +21,3 @@ texture = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="LineOfSightRay" type="RayCast2D" parent="."]
-collide_with_areas = true
