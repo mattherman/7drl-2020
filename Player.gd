@@ -25,7 +25,7 @@ func start(pos):
 	position += Vector2.ONE * tile_size/2
 	show()
 	
-func activate():
+func tick():
 	state = STATE_ACTIVE
 
 func _unhandled_input(event):

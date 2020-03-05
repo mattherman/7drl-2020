@@ -12,4 +12,8 @@ func tick():
 
 func _on_Fire_area_entered(area):
 	if area.is_in_group("can_receive_damage"):
-		area.damage_received(10)
+		area.add_to_group("condition:burning")
+
+func _on_Fire_area_exited(area):
+	if area.is_in_group("condition:burning"):
+		area.remove_from_group("condition:burning")
