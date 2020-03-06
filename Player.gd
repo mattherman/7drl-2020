@@ -2,8 +2,8 @@ extends Area2D
 
 class_name Player
 
-onready var Target = preload("res://Target.tscn")
-onready var Fire = preload("res://Fire.tscn")
+export (PackedScene) var Target
+export (PackedScene) var Fire
 
 signal action_completed
 signal damage_received

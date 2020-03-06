@@ -1,6 +1,6 @@
 extends Node
 
-onready var Enemy = preload("res://Enemy.tscn")
+export (PackedScene) var Enemy
 
 func _ready():
 	var enemy = Enemy.instance()
