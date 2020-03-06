@@ -6,7 +6,7 @@
 [ext_resource path="res://Target.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 4 )
+extents = Vector2( 8, 8 )
 
 [node name="Player" type="Area2D"]
 collision_layer = 2

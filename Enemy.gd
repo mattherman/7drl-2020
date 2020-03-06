@@ -8,7 +8,7 @@ var laser_color = Color(1.0, .329, .298)
 var health = 15
 export (int) var detect_radius = 7
 var target
-var collision_point
+var hit_pos
 
 func _ready():
 	add_to_group("can_receive_damage")
@@ -21,9 +21,10 @@ func _ready():
 func _draw():
 	draw_circle(Vector2(), detect_radius * tile_size, vis_color)
 	if target:
-		draw_line(Vector2(), (collision_point - position), laser_color)
-		draw_circle((collision_point - position), 5, laser_color)
-	
+		for hit in hit_pos:
+			draw_circle((hit - position).rotated(-rotation), 5, laser_color)
+			draw_line(Vector2(), (hit - position).rotated(-rotation), laser_color)
+
 func start(pos):
 	position = pos.snapped(Vector2.ONE * tile_size)
 	position += Vector2.ONE * tile_size/2
@@ -35,16 +36,23 @@ func tick():
 	if target && is_target_visible():
 		pursue_player()
 	update()
-	
+		
 func is_target_visible():
-	collision_point = target.position
-	$LineOfSightRay.cast_to = target.position - position
-	$LineOfSightRay.force_raycast_update()
-	if $LineOfSightRay.is_colliding():
-		collision_point = $LineOfSightRay.get_collision_point()
-		return false
-	else:
-		return true
+	hit_pos = []
+	var space_state = get_world_2d().direct_space_state
+	var target_extents = target.get_node('CollisionShape2D').shape.extents
+	var nw = target.position - target_extents
+	var se = target.position + target_extents
+	var ne = target.position + Vector2(target_extents.x, -target_extents.y)
+	var sw = target.position + Vector2(-target_extents.x, target_extents.y)
+	for pos in [target.position, nw, ne, se, sw]:
+		var result = space_state.intersect_ray(position,
+				pos, [self], collision_mask, true, true)
+		if result:
+			hit_pos.append(result.position)
+			if result.collider.name == "Player":
+				return true
+	return false
 
 func pursue_player():
 	print("enemy: pursue")
