@@ -99,6 +99,7 @@ ui_center={
 2d_physics/layer_2="walls"
 2d_physics/layer_3="enemies"
 2d_physics/layer_4="effects"
+2d_physics/layer_5="visibility"
 
 [rendering]
 

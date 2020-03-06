@@ -5,7 +5,7 @@ export (PackedScene) var Enemy
 func _ready():
 	var enemy = Enemy.instance()
 	add_child(enemy)
-	enemy.start($EnemyStartPosition.position, $Player)
+	enemy.start($EnemyStartPosition.position)
 	$Player.start($StartPosition.position)
 
 func _on_Player_action_completed():
