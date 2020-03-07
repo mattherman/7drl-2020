@@ -1,11 +1,21 @@
 extends Node
 
 export (PackedScene) var Enemy
+var pathfinder
+
+func _unhandled_input(event):
+	if event.is_action_pressed("toggle_show_paths"):
+		Debug.show_paths = !Debug.show_paths
+	if event.is_action_pressed("toggle_show_visibility_range"):
+		Debug.show_visibility_range = !Debug.show_visibility_range
+	if event.is_action_pressed("toggle_show_visibility_rays"):
+		Debug.show_visibility_rays = !Debug.show_visibility_rays
 
 func _ready():
+	pathfinder = Pathfinder.new($TileMap)
 	var enemy = Enemy.instance()
 	add_child(enemy)
-	enemy.start($EnemyStartPosition.position)
+	enemy.start($EnemyStartPosition.position, pathfinder)
 	$Player.start($StartPosition.position)
 
 func _on_Player_action_completed():

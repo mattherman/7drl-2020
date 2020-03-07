@@ -20,7 +20,8 @@ texture = ExtResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="LineOfSightRay" type="RayCast2D" parent="."]
+[node name="CollisionRay" type="RayCast2D" parent="."]
+collision_mask = 3
 
 [node name="Visibility" type="Area2D" parent="."]
 collision_layer = 8
