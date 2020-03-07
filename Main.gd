@@ -13,10 +13,15 @@ func _unhandled_input(event):
 
 func _ready():
 	pathfinder = Pathfinder.new($TileMap)
+	create_enemy($EnemyStartPosition.position)
+	create_enemy($EnemyStartPosition2.position)
+	create_enemy($EnemyStartPosition3.position)
+	$Player.start($StartPosition.position)
+	
+func create_enemy(pos):
 	var enemy = Enemy.instance()
 	add_child(enemy)
-	enemy.start($EnemyStartPosition.position, pathfinder)
-	$Player.start($StartPosition.position)
+	enemy.start(pos, pathfinder)
 
 func _on_Player_action_completed():
 	var tree = get_tree()
