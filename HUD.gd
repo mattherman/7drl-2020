@@ -5,3 +5,6 @@ func _ready():
 
 func update_health(health):
 	$HealthLabel.text = str(health)
+
+func append_log(message):
+	$RichTextLabel.text += ("\n" + message)

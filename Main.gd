@@ -32,31 +32,34 @@ func _on_Player_action_completed():
 	tree.call_group("effects", "tick")
 	tree.call_group("enemies", "tick")
 	$Player.tick()
+	
+func log_message(message):
+	$HUD.append_log(message)
 
 func _on_Player_damage_received(prev_health, current_health, type, description):
 	$HUD.update_health(current_health)
 	var damage = prev_health - current_health
 	if type == "melee":
-		print("The %s hits you for %s damage" % [description, damage])
+		log_message("The %s hits you for %s damage" % [description, damage])
 	elif type == "condition":
-		print("You are %s for %s damage" % [description, damage])
+		log_message("You are %s for %s damage" % [description, damage])
 	else:
-		print("You receive %s damage" % [damage])
+		log_message("You receive %s damage" % [damage])
 
 func _on_Player_killed():
-	print("You have been killed")
+	log_message("You have been killed")
 
 func _on_Enemy_damage_received(prev_health, current_health, name, type, description):
 	var damage = prev_health - current_health
 	if type == "melee":
-		print("You strike the %s for %s damage" % [name, damage])
+		log_message("You strike the %s for %s damage" % [name, damage])
 	elif type == "condition":
-		print("The %s is %s for %s damage" % [name, description, damage])
+		log_message("The %s is %s for %s damage" % [name, description, damage])
 	else:
-		print("The %s receives %s damage" % [name, damage])
+		log_message("The %s receives %s damage" % [name, damage])
 		
 func _on_Enemy_alerted(name):
-	print("The %s sees you" % name)
+	log_message("The %s sees you" % name)
 	
 func _on_Enemy_killed(name):
-	print("You killed the %s" % name)
+	log_message("You killed the %s" % name)

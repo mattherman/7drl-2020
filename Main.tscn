@@ -31,10 +31,10 @@ position = Vector2( 192, 104 )
 position = Vector2( 192, 248 )
 
 [node name="EnemyStartPosition2" type="Position2D" parent="."]
-position = Vector2( 304, 264 )
+position = Vector2( 304, 256 )
 
 [node name="EnemyStartPosition3" type="Position2D" parent="."]
-position = Vector2( 416, 232 )
+position = Vector2( 416, 224 )
 [connection signal="action_completed" from="Player" to="." method="_on_Player_action_completed"]
 [connection signal="damage_received" from="Player" to="." method="_on_Player_damage_received"]
 [connection signal="killed" from="Player" to="." method="_on_Player_killed"]
