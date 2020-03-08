@@ -8,9 +8,11 @@ var path_color = Color.cornflower
 
 var pathfinder: Pathfinder
 
-export (int) var health = 15
+export (int) var health = 60
 export (int) var detect_radius = 7
 export (int) var speed = 2
+export (int) var melee_strength = 5
+
 var target
 var path
 var hit_pos
@@ -45,6 +47,7 @@ func tick():
 		queue_free()
 	if target && is_target_visible():
 		path = pathfinder.find_path(position, target.position)
+		path.pop_front() # pop the initial position
 	if path:
 		pursue_target()
 	update()
@@ -58,29 +61,40 @@ func is_target_visible():
 	var ne = target.position + Vector2(target_extents.x, -target_extents.y)
 	var sw = target.position + Vector2(-target_extents.x, target_extents.y)
 	for pos in [target.position, nw, ne, se, sw]:
-		var result = space_state.intersect_ray(position,
-				pos, [self], collision_mask, true, true)
+		var result = collision_check(space_state, position, pos)
 		if result:
 			hit_pos.append(result.position)
-			if result.collider.name == "Player":
+			if result.collider.is_in_group("player"):
 				return true
 	return false
 
 func pursue_target():
-	print("enemy: pursuing")
-	print(path)
-	
-func can_move(pos):
+	for i in range(0, speed):
+		move_or_attack()
+
+func move_or_attack():
+	var next = path.front()
 	var space_state = get_world_2d().direct_space_state
-	var result = space_state.intersect_ray(position,
-				pos, [self], collision_mask, true, true)
+	var result = collision_check(space_state, position, next);
 	if result:
-		print(result.collider)
-		return false
+		if result.collider.is_in_group("player"):
+			result.collider.damage_received(melee_strength)
 	else:
-		return true
+		position = next
+		path.pop_front()
+
+func collision_check(state, from, to):
+	return state.intersect_ray(
+		from,
+		to,
+		[self],
+		collision_mask,
+		true,
+		true
+	)
 	
 func damage_received(damage):
+	print("enemy:damage_received %s" % damage)
 	health = max(health - damage, 0)
 
 func _on_Visibility_area_entered(area):

@@ -14,9 +14,11 @@ var inputs = Constants.INPUTS
 enum {STATE_IDLE, STATE_ACTIVE, STATE_TARGETING}
 var state = STATE_ACTIVE
 
-var health = 100
+export (int) var health = 100
+export (int) var melee_strength = 5
 
 func _ready():
+	add_to_group("player")
 	add_to_group("can_receive_damage")
 	hide()
 	
@@ -53,11 +55,26 @@ func finish_cast_spell(selected_position):
 	action_completed()
 
 func move(dir):
-	$CollisionRay.cast_to = inputs[dir] * tile_size
-	$CollisionRay.force_raycast_update()
-	if !$CollisionRay.is_colliding():
-		position += inputs[dir] * tile_size
+	var target_pos = position + (inputs[dir] * tile_size)
+	var state = get_world_2d().direct_space_state
+	var result = collision_check(state, position, target_pos)
+	if result:
+		if result.collider.is_in_group("enemies"):
+			result.collider.damage_received(melee_strength)
+			action_completed()
+	else:
+		position = target_pos
 		action_completed()
+		
+func collision_check(state, from, to):
+	return state.intersect_ray(
+		from,
+		to,
+		[self],
+		collision_mask,
+		true,
+		true
+	)
 		
 func action_completed():
 	state = STATE_IDLE
