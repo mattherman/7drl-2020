@@ -16,7 +16,8 @@ enum {STATE_IDLE, STATE_ACTIVE, STATE_TARGETING}
 var state = STATE_ACTIVE
 
 export (int) var health = 100
-export (int) var melee_strength = 5
+export (int) var melee_strength_min = 5
+export (int) var melee_strength_max = 10
 
 func _ready():
 	hide()
@@ -64,7 +65,8 @@ func move(dir):
 	var result = collision_check(state, position, target_pos)
 	if result:
 		if result.collider.is_in_group("enemies"):
-			result.collider.damage_received(melee_strength, "melee", "")
+			var damage = randi() % (melee_strength_max - melee_strength_min) + melee_strength_min
+			result.collider.damage_received(damage, "melee", "")
 			action_completed()
 	else:
 		position = target_pos

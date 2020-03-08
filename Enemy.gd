@@ -12,11 +12,12 @@ var path_color = Color.cornflower
 
 var pathfinder: Pathfinder
 
-export (int) var health = 60
+export (int) var health = 15
 export (int) var detect_radius = 7
 export (int) var speed = 2
-export (int) var melee_strength = 5
-export (String) var display_name = "Goblin"
+export (int) var melee_strength_min = 2
+export (int) var melee_strength_max = 8
+export (String) var display_name = "goblin"
 
 var target
 var path
@@ -90,7 +91,8 @@ func move_or_attack():
 	var result = collision_check(space_state, position, next);
 	if result:
 		if result.collider.is_in_group("player"):
-			result.collider.damage_received(melee_strength, "melee", display_name)
+			var damage = randi() % (melee_strength_max - melee_strength_min) + melee_strength_min
+			result.collider.damage_received(damage, "melee", display_name)
 	else:
 		position = next
 		path.pop_front()

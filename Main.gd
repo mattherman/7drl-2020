@@ -12,6 +12,7 @@ func _unhandled_input(event):
 		Debug.show_spell_range = !Debug.show_spell_range
 
 func _ready():
+	randomize()
 	pathfinder = Pathfinder.new($TileMap)
 	create_enemy($EnemyStartPosition.position)
 	create_enemy($EnemyStartPosition2.position)
@@ -28,7 +29,7 @@ func create_enemy(pos):
 
 func _on_Player_action_completed():
 	var tree = get_tree()
-	tree.call_group("condition:burning", "damage_received", 10, "condition", "burned")
+	tree.call_group("condition:burning", "damage_received", 15, "condition", "burned")
 	tree.call_group("effects", "tick")
 	tree.call_group("enemies", "tick")
 	$Player.tick()
