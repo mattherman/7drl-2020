@@ -33,13 +33,13 @@ func _ready():
 	$Visibility/CollisionShape2D.shape = shape
 	
 func _draw():
-	if Debug.show_visibility_range:
+	if Debug.show_enemy_visibility:
 		draw_circle(Vector2(), detect_radius * tile_size, vis_color)
-	if target && Debug.show_visibility_rays:
+	if target && Debug.show_enemy_visibility:
 		for hit in hit_pos:
 			draw_circle((hit - position).rotated(-rotation), tile_size/6, laser_color)
 			draw_line(Vector2(), (hit - position).rotated(-rotation), laser_color)
-	if path && Debug.show_paths:
+	if path && Debug.show_enemy_paths:
 		for pos in path:
 			draw_circle(pos - position, tile_size/4, path_color)
 

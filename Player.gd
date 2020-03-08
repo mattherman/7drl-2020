@@ -46,6 +46,7 @@ func cast_spell():
 	state = STATE_TARGETING
 	var target = Target.instance()
 	target.connect("target_selected", self, "finish_cast_spell")
+	target.connect("target_canceled", self, "cancel_cast_spell")
 	add_child(target)
 	
 func finish_cast_spell(selected_position):
@@ -53,6 +54,9 @@ func finish_cast_spell(selected_position):
 	flame.position = position + selected_position
 	get_parent().add_child(flame)
 	action_completed()
+	
+func cancel_cast_spell():
+	state = STATE_ACTIVE
 
 func move(dir):
 	var target_pos = position + (inputs[dir] * tile_size)

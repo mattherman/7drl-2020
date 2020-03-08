@@ -4,12 +4,12 @@ export (PackedScene) var Enemy
 var pathfinder
 
 func _unhandled_input(event):
-	if event.is_action_pressed("toggle_show_paths"):
-		Debug.show_paths = !Debug.show_paths
-	if event.is_action_pressed("toggle_show_visibility_range"):
-		Debug.show_visibility_range = !Debug.show_visibility_range
-	if event.is_action_pressed("toggle_show_visibility_rays"):
-		Debug.show_visibility_rays = !Debug.show_visibility_rays
+	if event.is_action_pressed("toggle_show_enemy_paths"):
+		Debug.show_enemy_paths = !Debug.show_enemy_paths
+	if event.is_action_pressed("toggle_show_enemy_visibility"):
+		Debug.show_enemy_visibility = !Debug.show_enemy_visibility
+	if event.is_action_pressed("toggle_show_spell_range"):
+		Debug.show_spell_range = !Debug.show_spell_range
 
 func _ready():
 	pathfinder = Pathfinder.new($TileMap)
