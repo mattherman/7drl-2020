@@ -106,6 +106,7 @@ func collision_check(state, from, to):
 	)
 	
 func damage_received(damage, type, description):
+	$HitEffect.play_damage_animation()
 	var prev_health = health
 	health = max(prev_health - damage, 0)
 	emit_signal("damage_received", prev_health, health, display_name, type, description)

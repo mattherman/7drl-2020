@@ -19,9 +19,9 @@ export (int) var health = 100
 export (int) var melee_strength = 5
 
 func _ready():
+	hide()
 	add_to_group("player")
 	add_to_group("can_receive_damage")
-	hide()
 	
 func start(pos):
 	position = pos.snapped(Vector2.ONE * tile_size)
@@ -81,6 +81,7 @@ func action_completed():
 	emit_signal("action_completed")
 	
 func damage_received(damage, type, description):
+	$HitEffect.play_damage_animation()
 	var prev_health = health
 	health = max(prev_health - damage, 0)
 	emit_signal("damage_received", prev_health, health, type, description)

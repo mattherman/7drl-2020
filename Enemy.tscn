@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://art/goblin.png" type="Texture" id=1]
 [ext_resource path="res://Enemy.gd" type="Script" id=2]
+[ext_resource path="res://HitEffect.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -27,5 +28,7 @@ collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Visibility"]
+
+[node name="HitEffect" parent="." instance=ExtResource( 3 )]
 [connection signal="area_entered" from="Visibility" to="." method="_on_Visibility_area_entered"]
 [connection signal="area_exited" from="Visibility" to="." method="_on_Visibility_area_exited"]
