@@ -7,6 +7,7 @@ export (PackedScene) var Fire
 
 signal action_completed
 signal damage_received
+signal killed
 
 var tile_size = Constants.TILE_SIZE
 var inputs = Constants.INPUTS
@@ -48,7 +49,6 @@ func cast_spell():
 	add_child(target)
 	
 func finish_cast_spell(selected_position):
-	print("receive: target_selected %s" % selected_position)
 	var flame = Fire.instance()
 	flame.position = position + selected_position
 	get_parent().add_child(flame)
@@ -60,7 +60,7 @@ func move(dir):
 	var result = collision_check(state, position, target_pos)
 	if result:
 		if result.collider.is_in_group("enemies"):
-			result.collider.damage_received(melee_strength)
+			result.collider.damage_received(melee_strength, "melee", "")
 			action_completed()
 	else:
 		position = target_pos
@@ -78,9 +78,11 @@ func collision_check(state, from, to):
 		
 func action_completed():
 	state = STATE_IDLE
-	print("emit: action_completed")
 	emit_signal("action_completed")
 	
-func damage_received(damage):
-	health = max(health - damage, 0)
-	emit_signal("damage_received", health)
+func damage_received(damage, type, description):
+	var prev_health = health
+	health = max(prev_health - damage, 0)
+	emit_signal("damage_received", prev_health, health, type, description)
+	if health <= 0:
+		emit_signal("killed")

@@ -24,7 +24,6 @@ func _unhandled_input(event):
 				move(dir)
 
 func select_target():
-	print("emit: target_selected")
 	emit_signal("target_selected", position)
 	queue_free()
 

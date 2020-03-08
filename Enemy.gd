@@ -1,5 +1,9 @@
 extends Area2D
 
+signal damage_received
+signal alerted
+signal killed
+
 var tile_size = Constants.TILE_SIZE
 
 var vis_color = Color(.867, .91, .247, 0.1)
@@ -12,10 +16,13 @@ export (int) var health = 60
 export (int) var detect_radius = 7
 export (int) var speed = 2
 export (int) var melee_strength = 5
+export (String) var display_name = "Goblin"
 
 var target
 var path
 var hit_pos
+var has_been_alerted
+var has_been_killed
 
 func _ready():
 	add_to_group("can_receive_damage")
@@ -43,11 +50,16 @@ func start(pos, pf):
 	show()
 
 func tick():
-	if health <= 0:
-		queue_free()
+	if has_been_killed:
+		return
+
 	if target && is_target_visible():
+		if !has_been_alerted:
+			alert()
 		path = pathfinder.find_path(position, target.position)
 		path.pop_front() # pop the initial position
+	else:
+		has_been_alerted = false
 	if path:
 		pursue_target()
 	update()
@@ -78,7 +90,7 @@ func move_or_attack():
 	var result = collision_check(space_state, position, next);
 	if result:
 		if result.collider.is_in_group("player"):
-			result.collider.damage_received(melee_strength)
+			result.collider.damage_received(melee_strength, "melee", display_name)
 	else:
 		position = next
 		path.pop_front()
@@ -93,9 +105,18 @@ func collision_check(state, from, to):
 		true
 	)
 	
-func damage_received(damage):
-	print("enemy:damage_received %s" % damage)
-	health = max(health - damage, 0)
+func damage_received(damage, type, description):
+	var prev_health = health
+	health = max(prev_health - damage, 0)
+	emit_signal("damage_received", prev_health, health, display_name, type, description)
+	if health <= 0:
+		has_been_killed = true
+		emit_signal("killed", display_name)
+		queue_free()
+	
+func alert():
+	has_been_alerted = true
+	emit_signal("alerted", display_name)
 
 func _on_Visibility_area_entered(area):
 	if area is Player:
