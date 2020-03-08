@@ -5,10 +5,10 @@ const directions = [
 	Vector2.LEFT,
 	Vector2.UP,
 	Vector2.DOWN,
-#	Vector2.UP + Vector2.RIGHT,
-#	Vector2.UP + Vector2.LEFT,
-#	Vector2.DOWN + Vector2.RIGHT,
-#	Vector2.DOWN + Vector2.LEFT
+	Vector2.UP + Vector2.RIGHT,
+	Vector2.UP + Vector2.LEFT,
+	Vector2.DOWN + Vector2.RIGHT,
+	Vector2.DOWN + Vector2.LEFT
 ]
 
 class_name Pathfinder
@@ -44,9 +44,10 @@ func find_path(start_pos, end_pos):
 func get_neighbors(pos):
 	var neighbors = []
 	for dir in directions:
-		var neighbor = pos + (dir * tile_size)
-		if map.get_cellv(neighbor) == TileMap.INVALID_CELL:
-			neighbors.append(neighbor)
+		var neighbor_pos = pos + (dir * tile_size)
+		var neighbor_cell = map.get_cellv(map.world_to_map(neighbor_pos))
+		if neighbor_cell == TileMap.INVALID_CELL:
+			neighbors.append(neighbor_pos)
 	return neighbors
 
 func heuristic(a: Vector2, b: Vector2):
