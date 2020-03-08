@@ -26,7 +26,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="7drl-2020"
+config/name="Labyrinth of the Lich"
 run/main_scene="res://Main.tscn"
 
 [autoload]
@@ -38,6 +38,8 @@ Debug="*res://Debug.gd"
 
 window/size/width=600
 window/size/height=400
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [input]
 
