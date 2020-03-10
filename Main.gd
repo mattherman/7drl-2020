@@ -50,6 +50,9 @@ func _on_Player_damage_received(prev_health, current_health, type, description):
 func _on_Player_killed():
 	log_message("You have been killed")
 
+func _on_Player_spell_cast(name):
+	log_message("You cast %s" % name)
+
 func _on_Enemy_damage_received(prev_health, current_health, name, type, description):
 	var damage = prev_health - current_health
 	if type == "melee":

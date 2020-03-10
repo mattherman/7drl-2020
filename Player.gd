@@ -7,6 +7,7 @@ export (PackedScene) var Fire
 
 signal action_completed
 signal damage_received
+signal spell_cast
 signal killed
 
 var tile_size = Constants.TILE_SIZE
@@ -54,6 +55,7 @@ func finish_cast_spell(selected_position):
 	var flame = Fire.instance()
 	flame.position = position + selected_position
 	get_parent().add_child(flame)
+	emit_signal("spell_cast", "Flame")
 	action_completed()
 	
 func cancel_cast_spell():
